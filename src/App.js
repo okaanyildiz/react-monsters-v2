@@ -1,21 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import SearchBox from './components/SearchBox'
 
 function App() {
 
+  // Monster trackers
   const [monsters, setMonsters] = useState([])
+  const [filteredMonsters, setFilteredMonsters] = useState(monsters)
 
-  async function getMonsters() {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users')
-    const data = await response.json()
-    setMonsters(data)
-    console.log(monsters)
-  }
-
-  getMonsters()
+  // Get monsters
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(users => setMonsters(users))
+  }, [])
 
   return (
     <div>
-      {monsters.map(monster => {
+      <SearchBox
+        className="search-box"
+        placeholder="search monsters"
+        setFilteredMonsters={setFilteredMonsters}
+        monsters={monsters}
+      />
+
+      {filteredMonsters.map(monster => {
         return (
           <div key={monster.id}>
             <h1>{monster.name}</h1>
