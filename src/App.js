@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import SearchBox from './components/SearchBox'
+import CardList from './components/CardList'
 
 function App() {
 
@@ -23,13 +24,9 @@ function App() {
         monsters={monsters}
       />
 
-      {filteredMonsters.map(monster => {
-        return (
-          <div key={monster.id}>
-            <h1>{monster.name}</h1>
-          </div>
-        )
-      })}
+      <CardList
+        filteredMonsters={filteredMonsters}
+      />
     </div>
   )
 }
